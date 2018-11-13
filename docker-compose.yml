@@ -1,0 +1,49 @@
+version: '2'
+services:
+    sharelatex:
+        restart: always
+        build: .
+        container_name: sharelatex
+        depends_on:
+            - mongo
+            - redis
+        privileged: true
+        ports:
+            - 9999:80
+        links:
+            - mongo
+            - redis
+        volumes:
+            - ~/.sharelatex/data:/var/lib/sharelatex
+            - /var/run/docker.sock:/var/run/docker.sock
+        environment:
+            SHARELATEX_MONGO_URL: mongodb://mongo/sharelatex
+            SHARELATEX_REDIS_HOST: redis
+            SHARELATEX_APP_NAME: ShareLaTeX
+
+            # SHARELATEX_SITE_URL: http://sharelatex.mydomain.com
+            # SHARELATEX_NAV_TITLE: Our ShareLaTeX Instance
+            # SHARELATEX_HEADER_IMAGE_URL: http://somewhere.com/mylogo.png
+            # SHARELATEX_ADMIN_EMAIL: support@it.com
+
+            # SHARELATEX_LEFT_FOOTER: '[{"text": "Powered by <a href=\"https://www.sharelatex.com\">ShareLaTeX</a> 2016"},{"text": "Another page I want to link to can be found <a href=\"here\">here</a>"} ]'
+            # SHARELATEX_RIGHT_FOOTER: '[{"text": "Hello I am on the Right"} ]'
+
+    mongo:
+        restart: always
+        image: mongo:3.6.8
+        container_name: mongo
+        ports:
+            - "27017:27017"
+        volumes:
+            - ~/.sharelatex/mongo_data:/data/db
+
+    redis:
+        restart: always
+        image: redis
+        container_name: redis
+        expose:
+            - 6379
+        volumes:
+            - ~/.sharelatex/redis_data:/data
+
