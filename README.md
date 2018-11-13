@@ -3,7 +3,7 @@
 Dockerfiles, scripts to support a ShareLaTeX server. The docker-related resources are a fork-ish of the [official repo](https://github.com/sharelatex/sharelatex). Key differences address:
 
 * Upgrading `tlmgr` to 2018 with a custom [image](https://github.com/sharelatex/sharelatex/issues/601)
-* Downgrading mongodb to version 3, otherwise [`mongodump` fails](https://dba.stackexchange.com/questions/215534/mongodump-unrecognized-field-snapshot) because apparently the version of mongodb installed through the debian `apt` repository wasn't compiled to work with mongodb version 4
+* Downgrading mongodb to version 3, otherwise [`mongodump` fails](https://dba.stackexchange.com/questions/215534/mongodump-unrecognized-field-snapshot) because apparently the version of `mongodump` installed through the debian `apt` repository wasn't compiled to work with mongodb version 4
 
 ## Usage
 
